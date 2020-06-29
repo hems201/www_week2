@@ -11,8 +11,6 @@ var bar_fill = document.getElementById("progress-bar-fill");
 var bar_value = document.getElementById("progress-bar-value");
 var width = 100;
 var value = 10;
-bar_fill.style.width = "100%";
-bar_value.innerHTML = "10s";
 var interval = setInterval(frame, 1000);
 
 //goes through all cells and adds EventListener
@@ -80,12 +78,11 @@ function cellClick(i) {
     }
     //player is switched
     [player, mark] = change_player(player);
-    //if all the boxes are filled but there has been no win, alert tie
   }
 }
 
 function winner(a, b, c, d, e) {
-  clearInterval(interval);
+  clearInterval(interval); //stop timer
   //if game is won
   //highlight winner cells
   turn = 0; //make turn 0 so that the tie message won't be executed
@@ -98,8 +95,9 @@ function winner(a, b, c, d, e) {
   status = "Game over"; //end game
 }
 
-//when restart button is pressed
+//fuction for when restart button is pressed
 function restart() {
+  //stop timer and reset bar
   clearInterval(interval);
   bar_fill.style.width = "100%";
   bar_value.innerHTML = "10s";
@@ -126,10 +124,14 @@ function change_player(p) {
     p = "1";
     m = "X";
   }
+  //updae whose turn it is
   document.getElementById("player").innerHTML = p;
+  //if all the boxes are filled but there has been no win, alert tie
   if (turn === 26) {
     alert("It's a tie! No winners here.");
   }
+
+  //reset timer bar
   clearInterval(interval);
   width = 100;
   value = 10;
@@ -139,6 +141,7 @@ function change_player(p) {
   return [p, m];
 }
 
+//function for timer
 function frame() {
   if (width === 0) {
     [player, mark] = change_player(player);
